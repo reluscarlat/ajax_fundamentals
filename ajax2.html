@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax 2</title>
+</head>
+<body>
+    <button id="button1">Get User</button>
+    <button id="button2">Get Users</button>
+    <p id="text"></p>
+    <div id="list"></div>
+    <script>
+        let button1 = document.getElementById('button1');
+        let button2 = document.getElementById('button2');
+
+        button1.addEventListener('click',function(){
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET','user.json',true);
+            xhr.onload = function() {
+                if(xhr.status == 200) {
+                    let user = JSON.parse(this.responseText);
+                    let list = document.getElementById('list');
+                    let item = document.createElement('div');
+                    item.innerHTML = `
+                                    <p>id = ${user.id}</p>
+                                    <p>name = ${user.name}</p>
+                                    <p>email = ${user.email}</p>
+                                    <hr>`
+                    list.appendChild(item);
+                }
+            }
+            xhr.send();
+        })
+
+        button2.addEventListener('click',function(){
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET','users.json',true);
+            xhr.onload = function() {
+                if(xhr.status == 200) {
+                    let users = JSON.parse(this.responseText);
+                    let list = document.getElementById('list');
+                    users.forEach(user => {
+                        let item = document.createElement('div');
+                        item.innerHTML = `
+                                        <p>id = ${user.id}</p>
+                                        <p>name = ${user.name}</p>
+                                        <p>email = ${user.email}</p>
+                                        <hr>`
+                        list.appendChild(item);
+                    })
+                }
+            }
+            xhr.send();
+        })
+    </script>
+</body>
+</html>

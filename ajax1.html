@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax 1</title>
+</head>
+<body>
+    <button id="button" > Get text File </button>
+    <div>
+        <p id="text"></p>
+    </div>
+</body>
+
+<script>
+    document.getElementById('button').addEventListener('click', loadText);
+    function loadText() {
+        // Create XHR object
+        let xhr = new XMLHttpRequest();
+
+        // OPEN - type, url/fileName, async
+        //console.log(xhr);
+        xhr.open('GET','sample2.txt', true);
+        
+        xhr.onload = function() {
+            if(this.status == 200) {
+                document.getElementById('text').innerHTML = this.responseText;
+            } else if(this.status == 404) {
+                document.getElementById('text').innerText = 'Pagina nu a fost gasita.';
+            }
+        }
+
+        // ONLOAD 
+      /*   xhr.onload = function() {
+            if(xhr.status == 200) {
+                console.log(this.responseText);
+            }
+        } */
+        
+        /* xhr.onerror = function() {
+            console.log('Error from loadText');
+        } */
+
+
+        /* xhr.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+        } */
+
+        // SEND
+        xhr.send()
+
+        /*
+            0	UNSENT	            Client has been created. open() not called yet.  || Connection not initialized 
+            1	OPENED	            open() has been called.  || Server connection initialized
+            2	HEADERS_RECEIVED	send() has been called, and headers and status are available. ||  Request received
+            3	LOADING	            Downloading; responseText holds partial data.  ||  Processing required
+            4	DONE	            The operation is complete.  ||  Request finished and response is ready
+        */
+
+        /*
+            HTTP STATUS:
+            200: "OK"
+            403: "Forbidden"
+            404: "Not Found"
+        */
+    }
+    
+
+</script>
+</html>

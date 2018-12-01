@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax 3</title>
+</head>
+<body>
+    <button id="button">Load Github Users</button>
+    <br>
+    <h1>Github users</h1>
+    <div id="list"></div>
+    <script>
+        let button = document.getElementById('button');
+        button.addEventListener('click',function(){
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET','https://api.github.com/users',true);
+            xhr.onload = function() {
+                if(xhr.status == 200) {
+                    let users = JSON.parse(this.responseText);
+                    let list = document.getElementById('list');
+                    users.forEach(user => {
+                        let item = document.createElement('div');
+                        item.innerHTML = `
+                                        <p>id = ${user.id}</p>
+                                        <img src = ${user.avatar_url} style = "height:60px">
+                                        <p>username = ${user.login}</p>
+                                        <p>url = ${user.html_url}</p>
+                                        <hr>`
+                        list.appendChild(item);
+                    });
+                }
+            }
+            xhr.send();
+        })
+    </script>
+</body>
+</html>
